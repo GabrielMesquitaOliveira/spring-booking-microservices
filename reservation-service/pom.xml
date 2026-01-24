@@ -15,7 +15,7 @@
 
     <artifactId>reservation-service</artifactId>
     <name>Reservation Service</name>
-    <description>Microsserviço de Gestão de Reservas</description>
+    <description>Reservation Management Microservice</description>
 
     <dependencies>
         <!-- ========== SPRING BOOT CORE ========== -->

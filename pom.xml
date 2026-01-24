@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <!-- ========================================== -->
-    <!-- PROJETO PAI (AGREGADOR)                   -->
+    <!-- PARENT PROJECT (AGGREGATOR)               -->
     <!-- ========================================== -->
     <groupId>com.bookingmicroservice</groupId>
     <artifactId>spring-booking-microservices</artifactId>
@@ -14,10 +14,10 @@
     <packaging>pom</packaging>
 
     <name>Spring Booking Microservices</name>
-    <description>Sistema de Reservas com Arquitetura de Microsserviços</description>
+    <description>Booking System with Microservices Architecture</description>
 
     <!-- ========================================== -->
-    <!-- MÓDULOS DO MONOREPO                       -->
+    <!-- MONOREPO MODULES                          -->
     <!-- ========================================== -->
     <modules>
         <module>service-discovery</module>
@@ -27,7 +27,7 @@
     </modules>
 
     <!-- ========================================== -->
-    <!-- PROPRIEDADES CENTRALIZADAS                -->
+    <!-- CENTRALIZED PROPERTIES                    -->
     <!-- ========================================== -->
     <properties>
         <!-- Java Version -->
@@ -56,8 +56,8 @@
     </properties>
 
     <!-- ========================================== -->
-    <!-- GERENCIAMENTO DE DEPENDÊNCIAS             -->
-    <!-- Todos os módulos herdam essas versões     -->
+    <!-- DEPENDENCY MANAGEMENT                     -->
+    <!-- All modules inherit these versions        -->
     <!-- ========================================== -->
     <dependencyManagement>
         <dependencies>
