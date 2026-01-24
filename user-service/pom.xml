@@ -123,6 +123,13 @@
             <optional>true</optional>
         </dependency>
 
+        <!-- Configuration Processor - generates metadata for IDE autocomplete -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+
         <!-- ========== TESTES ========== -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
