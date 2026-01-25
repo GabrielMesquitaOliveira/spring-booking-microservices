@@ -1,4 +1,4 @@
-package com.bookingmicroservice.reservation_service;
+package com.bookingmicroservice.reservationservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
