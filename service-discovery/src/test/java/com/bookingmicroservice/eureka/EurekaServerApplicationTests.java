@@ -1,10 +1,10 @@
-package com.bookingmicroservice.service_discovery;
+package com.bookingmicroservice.eureka;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ServiceDiscoveryApplicationTests {
+class EurekaServerApplicationTests {
 
 	@Test
 	void contextLoads() {
