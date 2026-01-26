@@ -10,9 +10,9 @@
 	</parent>
 	<groupId>com.bookingmicroservice</groupId>
 	<artifactId>service-discovery</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>service-discovery</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Eureka Service Discovery Server</description>
 	<url/>
 	<licenses>
 		<license/>

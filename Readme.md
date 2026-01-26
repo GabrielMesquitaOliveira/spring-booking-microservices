@@ -8,23 +8,22 @@ A lightweight demonstration of microservices patterns using Spring Boot and Spri
 
 ```
 spring-booking-microservices/
-├── pom.xml                    # Parent POM (aggregator)
 ├── README.md                  # This file
 │
 ├── service-discovery/         # Service Discovery (Port 8761)
-│   ├── pom.xml
+│   ├── pom.xml               # Independent Maven project
 │   └── src/
 │
 ├── api-gateway/               # API Gateway (Port 8080)
-│   ├── pom.xml
+│   ├── pom.xml               # Independent Maven project
 │   └── src/
 │
 ├── user-service/              # User Service (Port 8081)
-│   ├── pom.xml
+│   ├── pom.xml               # Independent Maven project
 │   └── src/
 │
 └── reservation-service/       # Reservation Service (Port 8082)
-    ├── pom.xml
+    ├── pom.xml               # Independent Maven project
     └── src/
 ```
 
@@ -57,20 +56,36 @@ git clone <your-repository>
 cd spring-booking-microservices
 ```
 
-### 2. Build all modules
+### 2. Build all services
+Each service is now an independent Maven project. You can build all at once or individually:
+
 ```bash
-mvn clean install
+# Build all services (from root)
+for service in service-discovery api-gateway user-service reservation-service; do
+  echo "Building $service..."
+  (cd $service && mvn clean install)
+done
+
+# Or build individually
+cd service-discovery && mvn clean install && cd ..
+cd api-gateway && mvn clean install && cd ..
+cd user-service && mvn clean install && cd ..
+cd reservation-service && mvn clean install && cd ..
 ```
 
 ### 3. Run the services (in order)
 
-#### Option A: Manually (separate terminal for each)
+**Important:** Services must start in this order:
+1. service-discovery (Eureka)
+2. api-gateway
+3. user-service & reservation-service (can run in parallel)
+
 ```bash
 # Terminal 1 - Eureka Server
 cd service-discovery
 mvn spring-boot:run
 
-# Terminal 2 - API Gateway
+# Terminal 2 - API Gateway (wait ~30s after Eureka)
 cd api-gateway
 mvn spring-boot:run
 
@@ -81,21 +96,6 @@ mvn spring-boot:run
 # Terminal 4 - Reservation Service
 cd reservation-service
 mvn spring-boot:run
-```
-
-#### Option B: Using Maven from root
-```bash
-# Eureka
-mvn spring-boot:run -pl service-discovery
-
-# Gateway
-mvn spring-boot:run -pl api-gateway
-
-# User Service
-mvn spring-boot:run -pl user-service
-
-# Reservation Service
-mvn spring-boot:run -pl reservation-service
 ```
 
 ## 🌐 Service URLs

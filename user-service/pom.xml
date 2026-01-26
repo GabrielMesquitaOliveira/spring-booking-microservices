@@ -6,25 +6,51 @@
     <modelVersion>4.0.0</modelVersion>
 
     <!-- ========================================== -->
-    <!-- PARENT - Inherits from root project       -->
+    <!-- PARENT - Spring Boot Starter Parent      -->
     <!-- ========================================== -->
     <parent>
-        <groupId>com.bookingmicroservice</groupId>
-        <artifactId>spring-booking-microservices</artifactId>
-        <version>1.0.0</version>
-        <relativePath>../pom.xml</relativePath>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>4.0.2</version>
+        <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <!-- ========================================== -->
-    <!-- MODULE INFORMATION                        -->
-    <!-- ========================================== --> 
+    <groupId>com.bookingmicroservice</groupId>
+    <version>1.0.0</version>
+
     <artifactId>user-service</artifactId>
     <name>User Service</name>
     <description>User Management Microservice</description>
 
     <!-- ========================================== -->
+    <!-- PROPERTIES                                -->
+    <!-- ========================================== -->
+    <properties>
+        <java.version>21</java.version>
+        <spring-cloud.version>2025.1.0</spring-cloud.version>
+        <mapstruct.version>1.6.3</mapstruct.version>
+        <jwt.version>0.12.3</jwt.version>
+        <springdoc.version>3.0.1</springdoc.version>
+    </properties>
+
+    <!-- ========================================== -->
+    <!-- DEPENDENCY MANAGEMENT                     -->
+    <!-- ========================================== -->
+    <dependencyManagement>
+        <dependencies>
+            <!-- Spring Cloud BOM -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <!-- ========================================== -->
     <!-- DEPENDENCIES                              -->
-    <!-- Versions inherited from parent POM        -->
     <!-- ========================================== -->
     <dependencies>
         <!-- ========== SPRING BOOT CORE ========== -->
@@ -79,15 +105,18 @@
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-api</artifactId>
+            <version>${jwt.version}</version>
         </dependency>
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-impl</artifactId>
+            <version>${jwt.version}</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-jackson</artifactId>
+            <version>${jwt.version}</version>
             <scope>runtime</scope>
         </dependency>
 
@@ -95,10 +124,12 @@
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
+            <version>${mapstruct.version}</version>
         </dependency>
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct-processor</artifactId>
+            <version>${mapstruct.version}</version>
             <scope>provided</scope>
         </dependency>
 
@@ -113,6 +144,7 @@
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>${springdoc.version}</version>
         </dependency>
 
         <!-- ========== DEV TOOLS ========== -->
@@ -153,10 +185,46 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
             </plugin>
 
-            <!-- Maven Compiler Plugin já configurado no pai -->
-            <!-- Não precisa repetir aqui -->
+            <!-- Maven Compiler Plugin with annotation processors -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                        <path>
+                            <groupId>org.mapstruct</groupId>
+                            <artifactId>mapstruct-processor</artifactId>
+                            <version>${mapstruct.version}</version>
+                        </path>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok-mapstruct-binding</artifactId>
+                            <version>0.2.0</version>
+                        </path>
+                    </annotationProcessorPaths>
+                    <compilerArgs>
+                        <arg>-parameters</arg>
+                    </compilerArgs>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 

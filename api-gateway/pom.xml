@@ -15,6 +15,7 @@
 
     <groupId>com.bookingmicroservice</groupId>
     <artifactId>api-gateway</artifactId>
+    <version>1.0.0</version>
     <name>API Gateway</name>
     <description>Gateway for request routing</description>
 
@@ -87,6 +88,14 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
             </plugin>
         </plugins>
     </build>
