@@ -44,7 +44,7 @@ spring-booking-microservices/
 
 ## 📋 Prerequisites
 
-- Java 21+
+- Java 25+
 - Maven 3.8+
 - IDE (IntelliJ IDEA, Eclipse, VS Code)
 
@@ -57,6 +57,17 @@ cd spring-booking-microservices
 ```
 
 ### 2. Build all services
+
+#### Option A: Using the start script (builds automatically)
+```bash
+./start-all.sh
+```
+This script will:
+- Build all services with `mvn clean install`
+- Start services in the correct order
+- Show logs location and service URLs
+
+#### Option B: Manual build
 Each service is now an independent Maven project. You can build all at once or individually:
 
 ```bash
@@ -73,13 +84,31 @@ cd user-service && mvn clean install && cd ..
 cd reservation-service && mvn clean install && cd ..
 ```
 
-### 3. Run the services (in order)
+### 3. Run the services
 
 **Important:** Services must start in this order:
 1. service-discovery (Eureka)
 2. api-gateway
 3. user-service & reservation-service (can run in parallel)
 
+#### Option A: Using the automated script (Recommended)
+```bash
+./start-all.sh
+```
+
+This script will:
+- ✅ Build all services
+- ✅ Start them in the correct order
+- ✅ Wait appropriate time between services
+- ✅ Create log files in `./logs/`
+- ✅ Show all service URLs including API documentation
+
+To stop all services:
+```bash
+./stop-all.sh
+```
+
+#### Option B: Manual startup (separate terminal for each)
 ```bash
 # Terminal 1 - Eureka Server
 cd service-discovery
@@ -102,18 +131,30 @@ mvn spring-boot:run
 
 | Service | Port | URL | Description |
 |---------|------|-----|-------------|
-| Eureka Server | 8761 | http://localhost:8761 | Eureka Dashboard |
-| API Gateway | 8080 | http://localhost:8080 | Single entry point |
+| Eureka Server | 8761 | http://localhost:8761 | Service Discovery Dashboard |
+| API Gateway | 8080 | http://localhost:8080 | Single entry point for all APIs |
 | User Service | 8081 | http://localhost:8081 | User management |
 | Reservation Service | 8082 | http://localhost:8082 | Reservation management |
 
-### Swagger/OpenAPI
-- User Service: http://localhost:8081/swagger-ui.html
-- Reservation Service: http://localhost:8082/swagger-ui.html
+### 📖 API Documentation (Scalar)
+Modern, interactive API documentation powered by Scalar (better than Swagger UI):
 
-### H2 Console
-- User Service: http://localhost:8081/h2-console
-- Reservation Service: http://localhost:8082/h2-console
+- **User Service:** http://localhost:8081/scalar/index.html
+- **Reservation Service:** http://localhost:8082/scalar/index.html
+
+**Features:**
+- 🎨 Beautiful, modern UI
+- ⚡ Fast and responsive
+- 🔍 Better search and navigation
+- 📱 Mobile-friendly
+- 🌓 Dark mode support
+
+### 🗄️ H2 Database Console
+- **User Service:** http://localhost:8081/h2-console
+- **Reservation Service:** http://localhost:8082/h2-console
+  - JDBC URL: `jdbc:h2:mem:userdb` (for user-service) or `jdbc:h2:mem:reservationdb` (for reservation-service)
+  - Username: `sa`
+  - Password: (empty)
 
 ## 📡 Main Endpoints
 
