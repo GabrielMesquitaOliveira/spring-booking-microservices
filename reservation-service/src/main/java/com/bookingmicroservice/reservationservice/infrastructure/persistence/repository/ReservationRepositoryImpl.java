@@ -7,6 +7,7 @@ import com.bookingmicroservice.reservationservice.infrastructure.persistence.ent
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,4 +44,12 @@ public class ReservationRepositoryImpl implements ReservationRepository {
             .map(reservationMapper::toDomain)
             .toList();
     }
+    
+    @Override
+    public List<Reservation> findByResourceNameAndDateBetween(String resourceName, LocalDateTime startOfDay, LocalDateTime endOfDay) {
+        return reservationJpaRepository.findByResourceNameAndDateBetween(resourceName, startOfDay, endOfDay).stream()
+            .map(reservationMapper::toDomain)
+            .toList();
+    }
 }
+

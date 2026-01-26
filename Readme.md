@@ -1,6 +1,8 @@
 # Spring Booking Microservices
 
-Booking System with Microservices Architecture using Spring Boot and Spring Cloud.
+🎓 **Educational Project** - Simple booking system with microservices architecture built for learning purposes as a school architecture project.
+
+A lightweight demonstration of microservices patterns using Spring Boot and Spring Cloud.
 
 ## 📁 Project Structure
 
@@ -255,10 +257,20 @@ The system uses JWT (JSON Web Tokens) for authentication:
 - [ ] Add centralized logging
 - [ ] Implement messaging (Kafka/RabbitMQ)
 
-## 👥 Authors
+## 🎯 Learning Objectives
 
-Your Name - Course Project
+This project demonstrates:
+- **Microservices Architecture**: Service decomposition and independent deployment
+- **Service Discovery**: Dynamic service registration with Eureka
+- **API Gateway Pattern**: Single entry point for all services
+- **Inter-Service Communication**: Using OpenFeign for REST calls
+- **Authentication**: JWT-based security
+- **API Documentation**: Swagger/OpenAPI integration
+
+## 📝 Note
+
+This is a **simplified educational project** designed for learning microservices concepts. It is not production-ready and intentionally keeps complexity minimal to focus on architectural patterns.
 
 ## 📄 License
 
-This project is for educational purposes.
+This project is for educational purposes only.
