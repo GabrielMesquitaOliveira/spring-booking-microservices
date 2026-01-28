@@ -11,15 +11,6 @@ spring:
   h2:
     console:
       enabled: false
-  cloud:
-    openfeign:
-      client:
-        config:
-          '[default]':
-            connectTimeout: 5000
-            readTimeout: 5000
-    discovery:
-      enabled: false
 
 eureka:
   client:
