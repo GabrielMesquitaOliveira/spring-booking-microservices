@@ -79,6 +79,10 @@ The system was designed using the **microservices** pattern, where the applicati
 
 #### Architecture Components
 
+**Note**: Services use different Spring versions:
+- **User Service**: Spring Boot 3.3.5 + Spring Cloud 2023.0.3
+- **Other Services**: Spring Boot 4.0.2 + Spring Cloud 2025.1.0
+
 1. **Service Discovery (Eureka Server - Port 8761)**
    - Dynamic service registration
    - Automatic service discovery
@@ -93,12 +97,14 @@ The system was designed using the **microservices** pattern, where the applicati
    - User management
    - User CRUD operations
    - Independent database (H2)
+   - Spring Boot 3.3.5 / Spring Cloud 2023.0.3
 
 4. **Reservation Service (Port 8082)**
    - Reservation management
    - Business rule validation
    - Communication with User Service (OpenFeign)
    - Independent database (H2)
+   - Spring Boot 4.0.2 / Spring Cloud 2025.1.0
 
 ---
 
@@ -297,6 +303,27 @@ Infrastructure Layer
 
 **Production Alternative**: PostgreSQL (already configured, commented in pom.xml)
 
+### 5.7 Spring Version Mix
+
+**Note**: The project uses different Spring versions across services:
+
+**User Service**:
+- Spring Boot 3.3.5 (stable LTS)
+- Spring Cloud 2023.0.3
+- MapStruct 1.5.5.Final
+
+**Other Services (Discovery, Gateway, Reservation)**:
+- Spring Boot 4.0.2 (newer version)
+- Spring Cloud 2025.1.0
+- MapStruct 1.6.3
+
+**Justification**:
+- User Service was developed earlier with Spring Boot 3.3.5
+- Other services use the newer Spring Boot 4.0.2
+- All services remain compatible via REST APIs
+- Spring Cloud Eureka handles cross-version service discovery
+- For educational purposes, demonstrates version flexibility in microservices
+
 ---
 
 ## 🧪 6. Tests and Business Rule Validation
@@ -341,7 +368,7 @@ mvn test
 ## 🚀 7. Execution Instructions
 
 ### 7.1 Prerequisites
-- **Java 25** or higher
+- **Java 21** or higher
 - **Maven 3.8+**
 - **Git**
 
@@ -445,18 +472,19 @@ curl "http://localhost:8080/api/reservations/available-slots?date=2026-02-15&res
 
 | Technology | Version | Purpose |
 |------------|---------|---------|
-| **Java** | 25 | Main language |
-| **Spring Boot** | 4.0.2 | Base framework |
-| **Spring Cloud** | 2025.1.0 | Microservices |
-| **Netflix Eureka** | - | Service Discovery |
-| **Spring Cloud Gateway** | - | API Gateway |
-| **OpenFeign** | - | HTTP Client |
-| **H2 Database** | - | Database |
-| **Lombok** | - | Boilerplate reduction |
-| **MapStruct** | 1.6.3 | Object mapping |
-| **JUnit 5** | - | Tests |
-| **Mockito** | - | Mocks for testing |
-| **Swagger/Scalar** | - | API Documentation |
+| **Java** | 21 | Main language |
+| **Spring Boot** | 3.3.5 (User Service)<br>4.0.2 (Other Services) | Base framework |
+| **Spring Cloud** | 2023.0.3 (User Service)<br>2025.1.0 (Other Services) | Microservices |
+| **Netflix Eureka** | Included in Spring Cloud | Service Discovery |
+| **Spring Cloud Gateway** | Included in Spring Cloud | API Gateway |
+| **OpenFeign** | Included in Spring Cloud | HTTP Client |
+| **H2 Database** | Runtime (latest) | In-memory database |
+| **Lombok** | Optional (latest) | Boilerplate reduction |
+| **MapStruct** | 1.5.5.Final (User Service)<br>1.6.3 (Reservation Service) | Object mapping |
+| **JJWT** | 0.12.3 | JWT library (dependency only) |
+| **SpringDoc** | 2.8.15 | API Documentation |
+| **JUnit 5** | Included in Spring Boot | Tests |
+| **Mockito** | Included in Spring Boot | Mocks for testing |
 
 ---
 
