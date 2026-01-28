@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: reservation-service-test
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+  h2:
+    console:
+      enabled: false
+  cloud:
+    openfeign:
+      client:
+        config:
+          '[default]':
+            connectTimeout: 5000
+            readTimeout: 5000
+
+eureka:
+  client:
+    enabled: false
+    register-with-eureka: false
+    fetch-registry: false
