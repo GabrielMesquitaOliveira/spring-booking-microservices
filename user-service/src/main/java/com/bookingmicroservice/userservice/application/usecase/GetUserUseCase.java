@@ -20,7 +20,7 @@ public class GetUserUseCase {
     @Transactional(readOnly = true)
     public UserResponse execute(Long id) {
         User user = userRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
+            .orElseThrow(() -> new com.bookingmicroservice.userservice.domain.exception.UserNotFoundException(id));
         return userMapper.toResponse(user);
     }
     
