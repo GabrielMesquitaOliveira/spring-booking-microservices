@@ -31,8 +31,7 @@ Develop a **reservation management system** that:
 
 ### Main Features
 1. **User Management**
-   - User registration and authentication
-   - Access control via JWT
+   - User registration
    - User profile maintenance
 
 2. **Reservation Management**
@@ -89,11 +88,9 @@ The system was designed using the **microservices** pattern, where the applicati
    - Single entry point
    - Intelligent routing
    - Load balancing
-   - Circuit breaker (Resilience4j)
 
 3. **User Service (Port 8081)**
    - User management
-   - Authentication and authorization (JWT)
    - User CRUD operations
    - Independent database (H2)
 
@@ -123,8 +120,8 @@ The system was designed using the **microservices** pattern, where the applicati
     ┌───────────────┐              ┌────────────────┐
     │ User Service  │              │ Reservation    │
     │               │◄─────────────┤ Service        │
-    │ • Auth/JWT    │  OpenFeign   │ • Business     │
-    │ • CRUD Users  │              │   Rules        │
+    │ • CRUD Users  │  OpenFeign   │ • Business     │
+    │               │              │   Rules        │
     │               │              │ • Validations  │
     └───────┬───────┘              └────────┬───────┘
             │                               │
@@ -229,8 +226,7 @@ Both services follow a layered architecture inspired by Clean Architecture:
 **Justification**:
 1. **Client Simplification**: Single URL to access all services
 2. **Centralized Routing**: Routing logic in one place
-3. **Cross-Cutting Concerns**: Authentication, logging, rate limiting centralized
-4. **Circuit Breaker**: Protection against cascading failures
+3. **Cross-Cutting Concerns**: Logging, potential for authentication/rate limiting centralized
 
 **Alternative Considered**: Direct access to services
 - ❌ Client needs to know multiple endpoints
@@ -300,15 +296,6 @@ Infrastructure Layer
 3. **Portability**: Runs in any environment
 
 **Production Alternative**: PostgreSQL (already configured, commented in pom.xml)
-
-### 5.7 JWT for Authentication
-
-**Decision**: Use JWT (JSON Web Tokens) for authentication
-
-**Justification**:
-1. **Stateless**: Doesn't require server session
-2. **Scalable**: Works well with multiple instances
-3. **Self-contained**: Token carries user information
 
 ---
 
@@ -554,11 +541,10 @@ This project exemplifies the following concepts studied in the module:
 |---------|---------|---------------|
 | **Architecture** | Microservices | Domain separation, independent scalability |
 | **Discovery** | Netflix Eureka | Dynamic discovery, automatic load balancing |
-| **Gateway** | Spring Cloud Gateway | Single entry point, circuit breaker |
+| **Gateway** | Spring Cloud Gateway | Single entry point, centralized routing |
 | **Communication** | OpenFeign (synchronous) | Simplicity, suitable for queries |
 | **Database** | H2 (dev) | Zero configuration, portability |
 | **Layers** | Clean Architecture | Testability, framework independence |
-| **Authentication** | JWT | Stateless, scalable |
 | **Tests** | JUnit 5 + Mockito | Business rule validation |
 
 ---
@@ -581,7 +567,8 @@ This project exemplifies the following concepts studied in the module:
 
 ### Possible Evolutions
 - Implement persistent database (PostgreSQL)
-- Add real authentication with Spring Security
+- Add authentication and authorization (JWT with Spring Security)
+- Implement circuit breaker for resilience (Resilience4j)
 - Implement messaging for asynchronous communication
 - Containerize with Docker
 - Add observability (logs, metrics, traces)
