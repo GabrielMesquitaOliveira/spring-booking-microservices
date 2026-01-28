@@ -4,9 +4,7 @@
 
 ## 👥 Team Members
 
-- [Full Name Member 1]
-- [Full Name Member 2]
-
+- Gabriel Mesquita Oliveira
 ---
 
 ## 📋 1. Problem Description
