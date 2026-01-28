@@ -315,3 +315,98 @@ This is a **simplified educational project** designed for learning microservices
 ## 📄 License
 
 This project is for educational purposes only.
+## Running Tests
+
+### Overview
+The application has comprehensive test coverage for business rules across both microservices:
+- **User Service**: 13 tests (3 unit + 9 integration + 1 smoke test)
+- **Reservation Service**: 23 unit tests covering all business rules
+
+### Run All Tests
+
+```bash
+# User Service Tests (includes integration tests)
+cd user-service
+mvn test
+
+# Reservation Service - Unit Tests (business rules)
+cd reservation-service
+mvn test -Dtest="*UseCaseTest,*ValidationServiceTest"
+```
+
+### Test Coverage
+
+#### User Service
+- ✅ **CreateUserUseCase Unit Tests** (3 tests)
+  - User creation with valid data
+  - Dependency call ordering
+  - Repository save verification
+
+- ✅ **UserController Integration Tests** (9 tests)
+  - POST /api/users with valid/invalid data
+  - Email format validation
+  - GET /api/users/{id} (existing and non-existent)
+  - GET /api/users (list all)
+
+#### Reservation Service
+- ✅ **ReservationValidationService Unit Tests** (16 tests)
+  - Duration validation (exactly 30 minutes)
+  - Time slot validation (:00 or :30 only)
+  - Business hours validation (8 AM - 6 PM)
+  - Overlap detection (no conflicting reservations)
+
+- ✅ **CreateReservationUseCase Unit Tests** (7 tests)
+  - Successful reservation creation
+  - User existence validation
+  - All validation rules enforced
+  - Overlap detection
+  - CONFIRMED status assignment
+
+### Business Rules Tested
+
+| Rule | Test Coverage | Status |
+|------|---------------|--------|
+| Reservations must be exactly 30 minutes | ✅ 3 tests | Passing |
+| Start times at :00 or :30 only | ✅ 4 tests | Passing |
+| Business hours: 8:00 AM - 6:00 PM | ✅ 4 tests | Passing |
+| No overlapping reservations | ✅ 5 tests | Passing |
+| User must exist before reservation | ✅ 2 tests | Passing |
+| Required fields validation | ✅ 5 tests | Passing |
+| Email format validation | ✅ 2 tests | Passing |
+
+### Test Architecture
+
+The tests follow best practices for clean architecture:
+
+1. **Unit Tests**: Test business logic in isolation with mocked dependencies
+   - Use `@ExtendWith(MockitoExtension.class)`
+   - Mock repositories, mappers, and external services
+   - Focus on business rules and edge cases
+
+2. **Integration Tests**: Test full request-response cycle
+   - Use `@SpringBootTest` with in-memory H2 database
+   - Test REST endpoints with MockMvc
+   - Verify HTTP status codes and JSON responses
+
+3. **Test Data**: Use builders and fixtures for consistent test data
+4. **Assertions**: Use AssertJ for fluent, readable assertions
+
+### Example: Running Specific Tests
+
+```bash
+# Run only validation tests
+mvn test -Dtest="ReservationValidationServiceTest"
+
+# Run only use case tests  
+mvn test -Dtest="CreateReservationUseCaseTest"
+
+# Run a single test method
+mvn test -Dtest="ReservationValidationServiceTest#shouldAcceptExactly30MinutesDuration"
+```
+
+### Test Reports
+
+After running tests, view detailed reports:
+- Surefire reports: `target/surefire-reports/`
+- Console output shows test names and results
+
